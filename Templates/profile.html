@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <title>Profile</title>
+      {% load static %}
+      <style>
+        .card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 300px;
+  margin: auto;
+  text-align: center;
+}
+
+.title {
+  color: grey;
+  font-size: 18px;
+}
+
+button {
+  border: none;
+  outline: 0;
+  display: inline-block;
+  padding: 8px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
+}
+
+a {
+  text-decoration: none;
+  font-size: 22px;
+  color: black;
+}
+
+button:hover, a:hover {
+  opacity: 0.7;
+}
+</style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    </head>
+
+<body>
+  {% if alm is None %}
+
+<div class="card">
+  <h1>{{ std.name }}</h1>
+    <p class="title">{{ std.mail_id }}</p>
+  <h2>Student ({{ std.year_of_grad }})<br>{{ std.branch_name }} </h2>
+  <form action="/info" method="POST">
+      {% csrf_token %}
+    <div class="container">
+      <button type="submit" class="signupbtn">Download Status</button>
+    </div>
+  </form>
+  <br>
+
+  <form action="/delete" method="POST">
+      {% csrf_token %}
+    <div class="container">
+      <button type="submit" class="signupbtn">Delete Account</button>
+    </div>
+  </form>
+</div>
+  {% else %}
+  <div class="card">
+    <h1>{{ alm.name }}</h1>
+    <p class="title">{{ alm.mail_id }}</p>
+    <h2>Alumni ({{ alm.year_of_grad }})<br>{{ alm.branch_name }} </h2>
+    <p class="title">{{ alm.company_name }}</p>
+
+    <form action="/delete" method="POST">
+        {% csrf_token %}
+      <div class="container">
+        <button type="submit" class="signupbtn">Delete Account</button>
+      </div>
+    </form>
+  </div>
+  {% endif %}
+  <div>
+    {% for message in messages %}
+    <h3 style="text-align: center;"><font color="#000080">{{message}}</font> </h3>
+      {% endfor %}
+  </div>
+</body>
+</html>

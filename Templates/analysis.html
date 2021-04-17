@@ -1,0 +1,65 @@
+<html>
+  <head>
+    {% load static %}
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <script type="text/javascript">
+
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+
+
+      function drawChart() {
+
+        var dataArray = [['Location','Applications']]
+
+        {% for c in location %}
+        dataArray.push(['{{ c.city }}',{{ c.count }}])
+
+        {% endfor %}
+
+        var data = new google.visualization.arrayToDataTable(dataArray);
+
+        var options = {
+          title: 'Locations preferred '
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+
+      }
+
+          google.charts.setOnLoadCallback(drawChart1);
+
+        function drawChart1() {
+
+          var dataArray1 = [['Role','Applications']]
+
+          {% for r in role %}
+          dataArray1.push(['{{ r.role }}',{{ r.count }}])
+
+          {% endfor %}
+
+          var data1 = new google.visualization.arrayToDataTable(dataArray1);
+
+          var options1 = {
+            title: 'Roles preferred'
+          };
+
+          var chart1 = new google.visualization.PieChart(document.getElementById('piechart1'));
+          chart1.draw(data1, options1);
+
+      }
+    </script>
+  </head>
+  <body>
+    <h1 style="text-align: center;"><font color="#000080">Pie charts depict locations and roles preferred.</h1>
+    <div>
+    <div id="piechart" style="width: 620px; height: 500px; float:left;"></div>
+    <div id="piechart1" style="width: 620px; height: 500px; float:right"></div>
+  </div>
+
+  </body>
+</html>
